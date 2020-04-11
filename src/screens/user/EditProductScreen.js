@@ -55,6 +55,11 @@ const EditProductScreen = props => {
             style={styles.input}
             value={title}
             onChangeText={text => setTitle(text)}
+            autoCapitalize="sentences"
+            autoCorrect
+            returnKeyType="next"
+            keyboardType="default"
+            onSubmitEditing={() => console.log("on submit editing")}
           />
         </View>
         <View style={styles.formControl}>
@@ -63,6 +68,7 @@ const EditProductScreen = props => {
             style={styles.input}
             value={imageUrl}
             onChangeText={text => setImageUrl(text)}
+            keyboardType="url"
           />
         </View>
         {editedProduct ? null : (
@@ -72,6 +78,7 @@ const EditProductScreen = props => {
               style={styles.input}
               value={price}
               onChangeText={text => setPrice(text)}
+              keyboardType="default"
             />
           </View>
         )}
