@@ -11,28 +11,38 @@ export const deleteProduct = (productId) => {
 
 export const fetchProducts = () => {
   return async (dispatch) => {
-    const response = await fetch(
-      "https://rn-course-9bc93.firebaseio.com/products.json"
-    );
-    const resData = await response.json();
-
-    const listProducts = [];
-    for (const key in resData) {
-      listProducts.push(
-        new Product(
-          key,
-          "u1",
-          resData[key].title,
-          resData[key].imageUrl,
-          resData[key].description,
-          resData[key].price
-        )
+    try {
+      const response = await fetch(
+        "https://rn-course-9bc93.firebaseio.com/products.json"
       );
-    }
 
-    dispatch({
-      type: SET_PRODUCTS, products: listProducts
-    });
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      const resData = await response.json();
+
+      const listProducts = [];
+      for (const key in resData) {
+        listProducts.push(
+          new Product(
+            key,
+            "u1",
+            resData[key].title,
+            resData[key].imageUrl,
+            resData[key].description,
+            resData[key].price
+          )
+        );
+      }
+
+      dispatch({
+        type: SET_PRODUCTS,
+        products: listProducts,
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
   };
 };
 
